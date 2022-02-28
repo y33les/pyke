@@ -14,17 +14,15 @@ class KLex(Lexer):
 
     ignore_comment_line = r'^\/.*$'
     ignore_comment_inline = r'\s+\/.*$'
-     
+
     # ignore = r'$\s+' # Ignore leading whitespace # TODO: This + trailing
-    
+
     # Tokens
     NAME = r'[a-zA-Z][a-zA-Z0-9]*' # TODO: Escape dots?
-    NUMBER = r'\d+'
-    # FLOAT = r'\d+\.\d+' # TODO: Better to implement as a rule for NUMBER,DOT,NUMBER
     SYMBOL = r'`"?[a-zA-Z][a-zA-Z0-9]"?' # TODO: Ensure 2 or no quotes
     CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes - probably better as a rule rather than in this regexp
     WSPACE = r'\s+'
-    
+
     # Verbs
     PLUS = r'\+'
     MINUS = r'-'
@@ -47,7 +45,7 @@ class KLex(Lexer):
     DOT = r'\.'
     COLON = r':'
     SPACE = r' '
-    
+
     # Adverbs
     FSLASH = r'/'
     BSLASH = r'\\'
@@ -65,6 +63,15 @@ class KLex(Lexer):
     SBRACKR = r'\]'
     BRACEL = r'\{'
     BRACER = r'\}'
+
+    @_(r'\d*\.?\d+')
+    def NUMBER(self,t):
+        try:
+            float(t.value)
+            return t
+        except:
+            int(t.value)
+            return t
 
 if __name__ == '__main__':
     d = 'x:2;foo:3.45;x+foo /this is a comment' # test with inline comment
