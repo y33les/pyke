@@ -22,37 +22,9 @@ class KLex(Lexer):
     SYMBOL = r'`"?[a-zA-Z][a-zA-Z0-9]"?' # TODO: Ensure 2 or no quotes
     CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes - probably better as a rule rather than in this regexp
     WSPACE = r'\s+'
-
-    # Verbs
-    PLUS = r'\+'
-    MINUS = r'-'
-    STAR = r'\*'
-    PERCENT = r'%'
-    PIPE = r'\|'
-    AMPERSAND = r'&'
-    CARET = r'\^'
-    BANG = r'!'
-    LTHAN = r'<'
-    GTHAN = r'>'
-    EQUALS = r'='
-    TILDE = r'~'
-    AT = r'@'
-    QUESTION = r'\?'
-    UNDERSCORE = r'_'
-    COMMA = r','
-    HASH = r'#'
-    DOLLAR = r'\$'
-    DOT = r'\.'
-    COLON = r':'
-    SPACE = r' '
-
-    # Adverbs
-    FSLASH = r'/'
-    BSLASH = r'\\'
-    TICK = r'\''
-    FSCOL = r'/:'
-    BSCOL = r'\\:'
-    TICKCOL = r'\':'
+    V=r'([-:+*%!&|<>=~,^#_$?@.]|0:|1:)'
+    A=r'(\':|/:|\\:|[\\\'/])'
+    N=r'`?"?[a-zA-z][a-zA-Z0-9*]"?'
 
     # Other
     SCOLON = r';'
@@ -64,7 +36,7 @@ class KLex(Lexer):
     BRACEL = r'\{'
     BRACER = r'\}'
 
-    @_(r'\d*\.?\d+')
+    @_(r'\d*\.?\d+') # TODO: E notation? 0x? 0b? negs not needed as handled by monadic -:
     def NUMBER(self,t):
         try:
             float(t.value)
