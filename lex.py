@@ -4,7 +4,7 @@ class KLex(Lexer):
     # K base verbs: +-*%|&^!<>=~@?_,#$.:
     # K I/O verbs: I/O Verbs 0: 1: 2: 3: 4: 5: 6:
     # K base adverbs: / \ ' /: \: ':
-    tokens = { NAME, INTEGER, FLOAT, SYMBOL, CHARACTER, WSPACE,    # Datatypes
+    tokens = { NAME, NUMBER, FLOAT, SYMBOL, CHARACTER, WSPACE,    # Datatypes
                PLUS, MINUS, STAR, PERCENT, PIPE, AMPERSAND, CARET, # Verbs
                BANG, LTHAN, GTHAN, EQUALS, TILDE, AT, QUESTION,
                UNDERSCORE, COMMA, HASH, DOLLAR, DOT, COLON, SPACE,
@@ -18,8 +18,8 @@ class KLex(Lexer):
     
     # Tokens
     NAME = r'[a-zA-Z][a-zA-Z0-9]*' # TODO: Escape dots?
-    INTEGER = r'\d+'
-    FLOAT = r'\d+\.\d+' # FIXME: Integer takes precedence
+    NUMBER = r'\d+'
+    # FLOAT = r'\d+\.\d+' # TODO: Better to implement as a rule for NUMBER,DOT,NUMBER
     SYMBOL = r'`"?[a-zA-Z][a-zA-Z0-9]"?' # TODO: Ensure 2 or no quotes
     CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes
     WSPACE = r'\s+'
@@ -66,7 +66,7 @@ class KLex(Lexer):
     BRACER = r'\}'
 
 if __name__ == '__main__':
-    d = 'x:2;y:3.45;x+y /this is a comment'
+    d = 'x:2;foo:3.45;x+foo /this is a comment'
     l = KLex()
     for t in l.tokenize(d):
         print('type=%r, value=%r' % (t.type, t.value))
