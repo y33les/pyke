@@ -12,7 +12,8 @@ class KLex(Lexer):
                SCOLON, NEWLINE, BRACKL, BRACKR, SBRACKL, SBRACKR,  # Other
                BRACEL, BRACER }
 
-    ignore_comment = r'\s+\/.*$'
+    ignore_comment_line = r'^\/.*$'
+    ignore_comment_inline = r'\s+\/.*$'
      
     # ignore = r'$\s+' # Ignore leading whitespace # TODO: This + trailing
     
@@ -21,7 +22,7 @@ class KLex(Lexer):
     NUMBER = r'\d+'
     # FLOAT = r'\d+\.\d+' # TODO: Better to implement as a rule for NUMBER,DOT,NUMBER
     SYMBOL = r'`"?[a-zA-Z][a-zA-Z0-9]"?' # TODO: Ensure 2 or no quotes
-    CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes
+    CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes - probably better as a rule rather than in this regexp
     WSPACE = r'\s+'
     
     # Verbs
@@ -66,7 +67,8 @@ class KLex(Lexer):
     BRACER = r'\}'
 
 if __name__ == '__main__':
-    d = 'x:2;foo:3.45;x+foo /this is a comment'
+    d = 'x:2;foo:3.45;x+foo /this is a comment' # test with inline comment
+    c = '/this is another comment'              # test with line comment
     l = KLex()
     for t in l.tokenize(d):
         print('type=%r, value=%r' % (t.type, t.value))
