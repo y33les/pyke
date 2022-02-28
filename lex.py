@@ -5,11 +5,12 @@ class KLex(Lexer):
     # K I/O verbs: I/O Verbs 0: 1: 2: 3: 4: 5: 6:
     # K base adverbs: / \ ' /: \: ':
     tokens = { NAME, INTEGER, FLOAT, SYMBOL, CHARACTER, WSPACE,    # Datatypes
-               SCOLON, NEWLINE,
                PLUS, MINUS, STAR, PERCENT, PIPE, AMPERSAND, CARET, # Verbs
                BANG, LTHAN, GTHAN, EQUALS, TILDE, AT, QUESTION,
                UNDERSCORE, COMMA, HASH, DOLLAR, DOT, COLON, SPACE,
-               FSLASH, BSLASH, TICK, FSCOL, BSCOL, TICKCOL }       # Adverbs
+               FSLASH, BSLASH, TICK, FSCOL, BSCOL, TICKCOL,        # Adverbs
+               SCOLON, NEWLINE, BRACKL, BRACKR, SBRACKL, SBRACKR,  # Other
+               BRACEL, BRACER }
 
     ignore_comment = r'\s+\/.*$'
      
@@ -22,8 +23,6 @@ class KLex(Lexer):
     SYMBOL = r'`"?[a-zA-Z][a-zA-Z0-9]"?' # TODO: Ensure 2 or no quotes
     CHARACTER = r'".*"' # TODO: Ensure 2 or no quotes
     WSPACE = r'\s+'
-    SCOLON = r';'
-    NEWLINE = r'\n'
     
     # Verbs
     PLUS = r'\+'
@@ -55,6 +54,16 @@ class KLex(Lexer):
     FSCOL = r'/:'
     BSCOL = r'\\:'
     TICKCOL = r'\':'
+
+    # Other
+    SCOLON = r';'
+    NEWLINE = r'\n'
+    BRACKL = r'\('
+    BRACKR = r'\)'
+    SBRACKL = r'\['
+    SBRACKR = r'\]'
+    BRACEL = r'\{'
+    BRACER = r'\}'
 
 if __name__ == '__main__':
     d = 'x:2;y:3.45;x+y /this is a comment'
