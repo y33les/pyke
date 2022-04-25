@@ -2,7 +2,7 @@ from sly import Lexer
 
 class KLex(Lexer):
     # K base verbs: +-*%|&^!<>=~@?_,#$.:
-    # K I/O verbs: I/O Verbs 0: 1: 2: 3: 4: 5: 6:
+    # K I/O verbs: 0: 1: 2: 3: 4: 5: 6:
     # K base adverbs: / \ ' /: \: ':
     tokens = { NAME, NUMBER, FLOAT, SYMBOL, CHARACTER, WSPACE,    # Datatypes
                PLUS, MINUS, STAR, PERCENT, PIPE, AMPERSAND, CARET, # Verbs
