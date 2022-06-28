@@ -6,15 +6,27 @@ from lex import KLex
 class KParse(Parser):
     tokens = KLex.tokens
 
-    # This is a comment so I can demo Git for Tim
+    @_('expr SEMI')
+    def root(self,p):
+        return ast.fix_missing_locations(ast.Expression(p.expr))
 
-    @_('array SEMI')
-    def expr(self,p):
-        return ast.fix_missing_locations(ast.Expression(p.array))
+    @_('expr SPACE expr')
+    def array(self,p): # FIXME
+        e0 = [p.expr0.elts] if isinstance(p.expr0,ast.List) else [p.expr0]
+        e1 = [p.expr1.elts] if isinstance(p.expr1,ast.List) else [p.expr1]
+        return ast.List(elts=e0 + e1,ctx=ast.Load())
 
-    @_('atom SEMI')
+    @_('LPAREN expr RPAREN')
     def expr(self,p):
-        return ast.fix_missing_locations(ast.Expression(p.atom))
+        return p.expr
+
+    @_('array')
+    def expr(self,p):
+        return p.array
+
+    @_('atom')
+    def expr(self,p):
+        return p.atom
 
     @_('array SPACE array')
     def array(self,p):
