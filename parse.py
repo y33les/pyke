@@ -6,6 +6,8 @@ from lex import KLex
 class KParse(Parser):
     tokens = KLex.tokens
 
+    # This is a comment so I can demo Git for Tim
+
     @_('array SEMI')
     def expr(self,p):
         return ast.fix_missing_locations(ast.Expression(p.array))
@@ -47,7 +49,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            text = input('apl > ')
+            text = input('K > ')
             result = p.parse(l.tokenize(text+'\n'))
             print("      "+to_source(result))
             result = eval(compile(result, filename="<ast>", mode="eval"))
