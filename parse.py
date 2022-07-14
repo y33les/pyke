@@ -19,6 +19,7 @@ class KParse(Parser):
     def root(self,p):
         self.out+=["NL"]
         print(self.out)
+        self.out=[]
         return ast.fix_missing_locations(ast.Expression(p.expr))
 
     @_('expr SPACE expr')
@@ -37,7 +38,10 @@ class KParse(Parser):
         self.out+=["LPAREN"]
         self.pd-=1
         print("PD: "+str(self.pd))
-        return p.expr
+        if self.pd!=0:
+            raise Exception("Unbalanced parentheses!") # FIXME: This doesn't detect pd>0 for some reason
+        else:
+            return p.expr
 
     @_('expr RPAREN')
     def expr(self,p):
@@ -67,6 +71,7 @@ class KParse(Parser):
 
     @_('atom')
     def value(self,p):
+        self.out+=[str(p.atom.value)]
         return p.atom
 
 #    @_('array SPACE array')
