@@ -4,7 +4,7 @@ class KLex(Lexer):
     # K base verbs: +-*%|&^!<>=~@?_,#$.:
     # K I/O verbs: 0: 1: 2: 3: 4: 5: 6:
     # K base adverbs: / \ ' /: \: ':
-    tokens = { NUMBER, CHAR, STRING, SYMBOL, ID, LPAREN, RPAREN, LBRACK, RBRACK, LBRACE, RBRACE, SPACE, PFUNC, COLON, SEMI, NEWLINE }
+    tokens = { NUMBER, CHAR, STRING, SYMBOL, ID, PAREN, LBRACK, RBRACK, LBRACE, RBRACE, SPACE, PFUNC, COLON, SEMI, NEWLINE }
 
     # String containing ignored characters between tokens
     ignore_comment_line = r'^\/.*$'
@@ -47,8 +47,7 @@ class KLex(Lexer):
         return t
 
     ID      = r'\.?[a-zA-Z]+[a-zA-Z0-9\.]*'
-    LPAREN  = r'\('
-    RPAREN  = r'\)'
+    PAREN  = r'\(.*\)'
     LBRACK = r'\['
     RBRACK = r'\]'
     LBRACE = r'\{'
